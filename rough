@@ -1,0 +1,87 @@
+Here’s a comprehensive list of data types and data structures in programming. These are categorized into primitive types, composite types, and abstract data structures across various languages:
+
+1. Data Types
+Primitive Data Types
+These are the basic building blocks of data in programming.
+
+Category	            Data Types	                                                            Examples
+Numeric	                - Integer (int)	                                                        5, -42
+                        - Floating-point (float, double)	                                    3.14, -0.001
+                        - Fixed-point, Decimal	12.45 (used in financial applications)
+                        - Complex Numbers (complex)	3+4j (in Python)
+Character	            - Character (char)	                                                    'a', '@'
+Boolean	                - Boolean (bool)	                                                    True, False
+Null/None	            - Null type (null, None)	                                            Indicates "no value"
+Enumerations	        - Enum	enum Days                                                       {Mon, Tue, Wed}
+
+
+
+Composite Data Types
+These combine multiple values into a single unit.   
+
+Category	        Data Types	                                Examples
+Text	            - String (str)	                            "hello", 'world'
+Array	            - Array	                                    [1, 2, 3]
+Tuple	            - Tuple	                                    (1, "hello", 3.14)
+Dictionary	        - Map (dict, hashmap, associative array)	{"key": "value"}
+Set	                - Set	                                    {1, 2, 3}
+
+
+
+
+2. Data Structures
+Linear Data Structures
+Data is organized in a sequential manner.
+
+Type	Description	Examples
+Array	Collection of elements of the same type.	[10, 20, 30]
+Linked List	Nodes linked via pointers.	head -> node1 -> node2
+Stack	LIFO (Last In, First Out).	push, pop
+Queue	FIFO (First In, First Out).	enqueue, dequeue
+Deque	Double-ended queue.	append, pop
+Non-Linear Data Structures
+Data is organized hierarchically or in networks.
+
+Type	Description	Examples
+Trees	Hierarchical structure.	Binary Tree, Binary Search Tree, AVL, Heap, B+ Tree
+Graphs	Nodes connected by edges.	Directed, Undirected, Weighted, Cyclic
+Hash-Based Structures
+Efficient storage and retrieval.
+
+Type	Description	Examples
+Hash Table	Key-value pairs with fast lookups.	Python's dict, Java's HashMap
+Hash Set	Unique elements with fast lookups.	{1, 2, 3}
+Advanced Structures
+Specialized for specific use cases.
+
+Type	Description	Examples
+Trie	Prefix-based tree for strings.	Auto-complete, Dictionary lookups
+Segment Tree	Efficient range queries.	Sum, Min, Max of ranges in an array
+Fenwick Tree	Efficient prefix sums.	Binary Indexed Tree
+Disjoint Set	For union-find operations.	Connected components in a graph
+Abstract Data Types (ADTs)
+These define operations, not implementation.
+
+ADT	Description	Examples
+List	Sequential collection.	append, insert
+Map/Dictionary	Key-value collection.	put, get
+Priority Queue	Elements prioritized based on value.	Min-Heap, Max-Heap
+Graph ADT	Representation of nodes and edges.	Adjacency List, Adjacency Matrix
+3. Language-Specific Data Types
+Python
+Built-in: int, float, str, list, tuple, dict, set.
+Specialized: deque (from collections), numpy.array (from numpy), pandas.DataFrame.
+Java
+Primitives: int, float, char, boolean.
+Collections: ArrayList, HashMap, HashSet, LinkedList.
+C++
+STL Containers: vector, deque, map, set, queue, stack.
+JavaScript
+Built-in: String, Number, Object, Array, Map, Set.
+Let me know if you'd like detailed examples for any specific data type or structure!
+
+
+
+
+
+

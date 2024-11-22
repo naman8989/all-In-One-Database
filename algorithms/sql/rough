@@ -1,0 +1,230 @@
+Here’s a list of the most commonly used commands and features in the SQLite3 command-line interface (sqlite3), including both SQL commands and SQLite-specific dot commands (those starting with a dot .):
+
+SQLite3 SQL Commands
+These are standard SQL commands supported by SQLite for querying and managing databases.
+
+SELECT – Retrieve data from one or more tables.
+
+sql
+Copy code
+SELECT * FROM table_name;
+INSERT – Insert data into a table.
+
+sql
+Copy code
+INSERT INTO table_name (column1, column2) VALUES (value1, value2);
+UPDATE – Update data in a table.
+
+sql
+Copy code
+UPDATE table_name SET column1 = value1 WHERE condition;
+DELETE – Delete data from a table.
+
+sql
+Copy code
+DELETE FROM table_name WHERE condition;
+CREATE TABLE – Create a new table.
+
+sql
+Copy code
+CREATE TABLE table_name (column1 datatype, column2 datatype);
+DROP TABLE – Drop (delete) a table.
+
+sql
+Copy code
+DROP TABLE table_name;
+ALTER TABLE – Modify an existing table (e.g., adding columns).
+
+sql
+Copy code
+ALTER TABLE table_name ADD COLUMN column_name datatype;
+CREATE INDEX – Create an index on a table to speed up queries.
+
+sql
+Copy code
+CREATE INDEX index_name ON table_name (column1, column2);
+DROP INDEX – Drop an index.
+
+sql
+Copy code
+DROP INDEX index_name;
+PRAGMA – Query or modify internal settings or parameters.
+
+sql
+Copy code
+PRAGMA foreign_keys = ON;
+BEGIN TRANSACTION – Start a new transaction.
+
+sql
+Copy code
+BEGIN TRANSACTION;
+COMMIT – Commit the current transaction.
+
+sql
+Copy code
+COMMIT;
+ROLLBACK – Roll back the current transaction.
+
+sql
+Copy code
+ROLLBACK;
+EXPLAIN – Analyze query performance (debugging).
+
+sql
+Copy code
+EXPLAIN QUERY PLAN SELECT * FROM table_name;
+SQLite3 Dot Commands (CLI-specific)
+These commands are unique to the SQLite3 command-line shell and are used for managing databases, displaying metadata, or altering the behavior of the shell.
+
+.open – Open a database file.
+
+bash
+Copy code
+.open database_name.db
+.databases – List all attached databases.
+
+bash
+Copy code
+.databases
+.tables – List all tables in the database.
+
+bash
+Copy code
+.tables
+.schema – Show the schema (structure) of a table or all tables.
+
+bash
+Copy code
+.schema table_name
+.schema
+.headers – Turn on/off displaying column headers in query results.
+
+bash
+Copy code
+.headers ON
+.headers OFF
+.mode – Set the output mode (e.g., column, CSV, list, etc.).
+
+bash
+Copy code
+.mode column
+.mode csv
+.mode list
+.exit or .quit – Exit the SQLite3 shell.
+
+bash
+Copy code
+.exit
+.quit
+.help – Display help information for dot commands.
+
+bash
+Copy code
+.help
+.import – Import data from a file into a table.
+
+bash
+Copy code
+.import file.csv table_name
+.output – Redirect query output to a file or a device.
+
+bash
+Copy code
+.output file.txt
+.timer – Enable or disable the query execution time display.
+
+bash
+Copy code
+.timer ON
+.timer OFF
+.save – Write the entire database to a file.
+
+bash
+Copy code
+.save backup.db
+.restore – Restore the database from a file.
+
+bash
+Copy code
+.restore backup.db
+.echo – Turn on/off the command echoing in the shell.
+
+bash
+Copy code
+.echo ON
+.echo OFF
+.version – Show the version of SQLite3.
+
+bash
+Copy code
+.version
+.mode – Set the mode for how query results are displayed (e.g., CSV, column, HTML, etc.).
+
+bash
+Copy code
+.mode column
+.mode csv
+.mode html
+.import – Import data from a CSV file into a database table.
+
+bash
+Copy code
+.import data.csv tablename
+.load – Load a shared extension.
+
+bash
+Copy code
+.load extension_name
+.backup – Backup the current database to a file.
+
+bash
+Copy code
+.backup backup.db
+.close – Close the currently opened database connection.
+
+bash
+Copy code
+.close
+SQLite3 Query Execution Modes
+SQLite3 supports several modes for displaying query results:
+
+.mode column – Displays query results in a column-based format.
+.mode csv – Displays query results in CSV format.
+.mode list – Displays query results in a line-by-line format.
+.mode html – Displays query results as an HTML table.
+.mode json – Displays query results in JSON format.
+.mode tcl – Displays query results in Tcl list format.
+Example Commands
+To see all tables:
+bash
+Copy code
+.tables
+To display the schema for a specific table:
+bash
+Copy code
+.schema users
+These dot commands are specific to the SQLite3 CLI and not part of standard SQL, so they only work in the SQLite shell, not in other SQL environments.
+
+Summary Table
+Command	Description
+SELECT	Query data from a table.
+INSERT	Insert new data into a table.
+UPDATE	Update existing data in a table.
+DELETE	Remove data from a table.
+CREATE TABLE	Create a new table.
+DROP TABLE	Delete an existing table.
+PRAGMA	Set or get SQLite-specific settings (e.g., foreign_keys).
+.tables	List all tables in the database.
+.schema	Show the schema (structure) of tables or the entire DB.
+.open	Open a database file.
+.mode	Set output mode (e.g., column, CSV).
+.exit or .quit	Exit SQLite3 shell.
+.help	Show help for commands.
+.databases	List attached databases.
+Let me know if you need more details about a specific command!
+
+
+
+
+
+
