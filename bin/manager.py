@@ -1,5 +1,5 @@
 # managing database
-import backLead
+import bin.backendManager as backendManager
 import flask
 
 class Manager:

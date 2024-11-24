@@ -35,8 +35,8 @@ class Tools{
         }
 };
 
-// int main(int argc, char* argv[]){
-int main(){
+// int main(){
+int main(int argc, char* argv[]){
     
     sqlite3 *db ;
     int rc;
@@ -54,16 +54,16 @@ int main(){
     Tools tools;
     std::vector<std::string> ret =  tools.readEnv("./sqlEnvSetup.txt");
     
-    // std::string input = argv[1];
+    std::string input = argv[1];
 
-    // std::stringstream ss(input);
+    std::stringstream ss(input);
 
-    // std::vector<std::string> arguments = {};
+    std::vector<std::string> arguments = {};
     
-    // std::string token;
-    // while (std::getline(ss, token, '~')) {
-    //     arguments.push_back(token);
-    // }
+    std::string token;
+    while (std::getline(ss, token, '~')) {
+        arguments.push_back(token);
+    }
     
     sqlite3_close(db);
 
