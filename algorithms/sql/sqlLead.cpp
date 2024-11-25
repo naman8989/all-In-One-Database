@@ -35,7 +35,7 @@ class Tools{
         }
 };
 
-// int main(){
+
 int main(int argc, char* argv[]){
     
     sqlite3 *db ;

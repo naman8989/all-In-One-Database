@@ -25,12 +25,21 @@ class queryHandler:
     def __init__(self):
         pass
     
-    def parsing(self):
-        pass
+    def parsing(self,query):
+        queryParts = query.split(" ")
+        return queryParts
     
-    def binding(self):
+    def binding(self,queryParts,pos):
         # set tempenv here
-        pass
+        # and check for avaliable database and file
+        if queryParts[0] in ["sql","mongo","Linklist"]: #selecting which database
+            pass
+        elif queryParts[0] in ["create","read","delete","use"]:
+            pass
+        else:
+            return "something wrong with query"
+
+        
 
     def optimization(self):
         # if necessary
@@ -39,15 +48,17 @@ class queryHandler:
     def runQuery(self):
         pass
 
+
+
 class databaseHandler:
     def __init__(self,path):
-        self.databasesPath = path
+        self.databasesPath = path # set path to "../memory"
         pass
 
     def checkDatabaseExit(self):
         return os.path.isdir(self.databasesPath)
 
-    def createDatabase(self,name):
+    def createDatabase(self,name): # create database
         if not self.checkDatabaseExit(path=f"{self.databasesPath}/{name}"):
             return "already exist"
         if name != None:
@@ -55,12 +66,15 @@ class databaseHandler:
             if self.checkDatabaseExit(path=f"{self.databasesPath}/{name}"):
                 return True
         return False
-        
-    def readDatabases(self):
-        allDatabases = [item for item in os.listdir(self.databasesPath) if os.path.isdir(os.path.join(self.databasesPath, item))]
-        print(allDatabases)
+    
+    def readDatabases(self): # read Database
+        allDatabases = [item for item in os.listdir(self.databasesPath) ]
+        allSubDatabase = []
+        for i in allDatabases:
+            allSubDatabase.append([item for item in os.listdir(self.databasesPath+"/"+i)])
+        return [allDatabases,allSubDatabase]
 
-    def updateDatabaseInUse(self,envPath,name):
+    def updateDatabaseInUse(self,envPath,name): # update database pointer
         try:
             updDatabase = backendEnv(envPath)
             data = updDatabase.importEnv()
@@ -71,7 +85,7 @@ class databaseHandler:
         
         return True    
 
-    def deleteDatabase(self,name):
+    def deleteDatabase(self,name):   # delete database
         os.rmdir(self.databasesPath+"/"+name)
         if self.checkDatabaseExit(path=self.databasesPath+"/"+name):
             return True
