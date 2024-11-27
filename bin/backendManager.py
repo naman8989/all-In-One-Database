@@ -1,99 +1,168 @@
 import json
 import os 
+import threading
 
 
 class backendEnv:
     def __init__(self,envLoc):
         self.envLocation = envLoc
+        self.envData = self.setEnv() 
 
-    def importEnv(self):
-        with open(self.envLocation,'r') as file:
-            self.envData = json.load(file)
-        return self.envData
+    def setEnv(self):
+        return {"selectedDatabase": 0, "selectedDataStructure": 0}
     
-    def updateEnv(self,updatedData):
+    def getEnv(self,pos):
+        if pos == 0:
+            return self.envData["selectedDatabase"]
+        if pos == 1:
+            return self.envData["selectedDataStructure"]
+        return False
+    
+    def updateEnv(self,pos,name):
         try:
-            with open(self.envLocation,"w") as file:
-                self.envData = updatedData
-                file = updatedData
+            if pos == 0:
+                self.envData["selectedDatabase"] = name
+            if pos == 1:
+                self.envData["selectedDataStructure"] = name
         except:
             return False
         return True
 
-        
-class queryHandler:
-    def __init__(self):
-        pass
+
+class databaseHandler(backendEnv):
+    def __init__(self,dbPath,envPath):
+        super().__init__(envPath)
+        self.databasesPath = dbPath # set path to "../memory"
+
+    def checkFolder(self,checkPath):
+        return os.path.isdir(checkPath)
+
+    def create(self,name,bole): # create database
+        if not bole:
+            tempPath = f"{self.databasesPath}/{name}"
+        else:
+            if  self.getEnv(0)== 0: # for datastructure 
+                return "Database not selected"
+            tempPath = f"{self.databasesPath}/{self.getEnv(0)}/{name}"
+
+        if self.checkFolder(checkPath=tempPath):
+            return "DataStructure already exist" if bole else "Database already exist"
+        if name != None:
+            os.makedirs(tempPath,exist_ok=True)
+            if self.checkFolder(checkPath=tempPath):
+                return True
+        return False
     
+    def read(self,bole): # read Database
+        if not bole:
+            tempPath =self.databasesPath
+        else:
+            if  self.getEnv(0)== 0: # for datastructure 
+                return "Database not selected"
+            tempPath = self.databasesPath+"/"+self.getEnv(0)
+
+        allInfo = [item for item in os.listdir(tempPath) ]
+        allInfo.append(len(allInfo))
+        return allInfo
+    
+    def use(self,name,bole):
+        if not bole: 
+            if self.checkFolder(self.databasesPath+"/"+name):
+                return self.updateEnv(0,name)
+            else:
+                return "Database don't exist"
+        else:
+            if  self.getEnv(0)== 0: # for datastructure 
+                return "Database not selected"
+            elif self.checkFolder(self.databasesPath+"/"+self.getEnv(0)+"/"+name):
+                return self.updateEnv(1,name)
+            else:
+                return "DataStructure don't exist"
+
+        
+
+       
+    def delete(self,name,bole):   # delete database
+        if not bole:
+            tempPath = f"{self.databasesPath}/{name}"
+        else:
+            if self.getEnv(0) == 0: # delete subdatabase
+                return "Database not selected"
+            tempPath = f"{self.databasesPath}/{self.getEnv(0)}/{name}"
+        if not self.checkFolder(checkPath=tempPath):
+            return "DataStructure doesn't exists" if bole else "Database doesn't exists" 
+        os.rmdir(tempPath)
+        if self.checkFolder(checkPath=tempPath):
+            return False
+        return True
+    
+    def databaseProcessIDs(self):
+        
+        return
+
+        
+class queryHandler(databaseHandler):
+    def __init__(self,dbPath,envPath):
+        super().__init__(dbPath=dbPath,envPath=envPath)
+    
+    def workflow(self,quer):
+        ret = self.parsing(query=quer)
+        return self.binding(ret)
+
     def parsing(self,query):
         queryParts = query.split(" ")
         return queryParts
     
-    def binding(self,queryParts,pos):
-        # set tempenv here
-        # and check for avaliable database and file
-        if queryParts[0] in ["sql","mongo","Linklist"]: #selecting which database
-            pass
-        elif queryParts[0] in ["create","read","delete","use"]:
-            pass
-        else:
-            return "something wrong with query"
+    def binding(self,queryParts):
+        match queryParts[0]:
+            case "create":
+                if queryParts[1] == "database":
+                    return super().create(queryParts[2],False) 
+                elif queryParts[1] == "datastructure":
+                    return super().create(queryParts[2],True) 
+                else:
+                    return "something wrong with query"
+            case "read":
+                if queryParts[1] == "databases":
+                    return super().read(False)
+                elif queryParts[1] == "datastructures":
+                    return super().read(True)
+                else:
+                    return "something wrong with query"
+            case "use":
+                if queryParts[1] == "database":
+                    return self.use(queryParts[2],False) 
+                elif queryParts[1] == "datastructure":
+                    return self.use(queryParts[2],True)  
+                else:
+                    return "something wrong with query"
+            case "delete":
+                if queryParts[1] == "database":
+                    return super().delete(queryParts[2],False)
+                elif queryParts[1] == "datastructure":
+                    return super().delete(queryParts[2],True)                    
+                else:
+                    return "something wrong with query"
+        return "Nothing to bind"
 
-        
-
-    def optimization(self):
-        # if necessary
-        pass
+    # def optimization(self):
+    #     # if necessary
+    #     pass
     
-    def runQuery(self):
-        pass
+    # def runQuery(self):
+    #     pass    
 
 
+if __name__ == "__main__":
+    backend = queryHandler("./memory","./bin/backendEnvSetup.json")
+    parseQuery = ""
+    while parseQuery != "f":
+        print(backend.workflow(parseQuery))
+        parseQuery = input("Query >> ")
 
-class databaseHandler:
-    def __init__(self,path):
-        self.databasesPath = path # set path to "../memory"
-        pass
 
-    def checkDatabaseExit(self):
-        return os.path.isdir(self.databasesPath)
-
-    def createDatabase(self,name): # create database
-        if not self.checkDatabaseExit(path=f"{self.databasesPath}/{name}"):
-            return "already exist"
-        if name != None:
-            os.makedirs(self.databasesPath,exist_ok=True)
-            if self.checkDatabaseExit(path=f"{self.databasesPath}/{name}"):
-                return True
-        return False
     
-    def readDatabases(self): # read Database
-        allDatabases = [item for item in os.listdir(self.databasesPath) ]
-        allSubDatabase = []
-        for i in allDatabases:
-            allSubDatabase.append([item for item in os.listdir(self.databasesPath+"/"+i)])
-        return [allDatabases,allSubDatabase]
 
-    def updateDatabaseInUse(self,envPath,name): # update database pointer
-        try:
-            updDatabase = backendEnv(envPath)
-            data = updDatabase.importEnv()
-            data["selectedDatabase"] = name
-            updDatabase.updateEnv(data)
-        except:
-            return False
-        
-        return True    
-
-    def deleteDatabase(self,name):   # delete database
-        os.rmdir(self.databasesPath+"/"+name)
-        if self.checkDatabaseExit(path=self.databasesPath+"/"+name):
-            return True
-        return False
-
-
-
-backend = backendEnv("./backendEnvSetup.json")
 
 
         
